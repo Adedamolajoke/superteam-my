@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superteam Malaysia — The Home of Solana Builders in Malaysia</title>
+<meta name="description" content="Superteam Malaysia is the premier community of Web3 builders, developers, designers, and founders building on Solana in Malaysia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:        #0a0714;
+  --bg2:       #0d0a1e;
+  --bg3:       #100c22;
+  --surface:   #130f26;
+  --s2:        #1a1535;
+
+  --violet:    #c77dff;
+  --violet-hi: #d9a0ff;
+  --violet-lo: rgba(199,125,255,0.10);
+  --violet-b:  rgba(199,125,255,0.22);
+  --magenta:   #cc44ff;
+  --magenta-hi:#e040fb;
+  --blue-acc:  #4361ee;
+  --blue-lo:   rgba(67,97,238,0.15);
+
+  --white:     #ffffff;
+  --text:      #e8e0ff;
+  --dim:       #b0a4d0;
+  --muted:     #8e82ba;
+  --border:    rgba(199,125,255,0.14);
+  --border2:   rgba(255,255,255,0.07);
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Space Grotesk', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+
+  --grad: linear-gradient(135deg, #4361ee 0%, #7b2ff7 45%, #cc44ff 100%);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+/* Only hide cursor on fine-pointer (mouse) devices */
+@media(pointer:fine){
+  body{}
+  #cur,#cur-ring{display:block;}
+}
+@media(pointer:coarse),print{
+  body{cursor:auto;}
+  #cur,#cur-ring{display:none;}
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:8px;height:8px;background:var(--violet);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;}
+#cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(199,125,255,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+
+/* ── CODE TEXTURE BACKGROUND ── */
+.code-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  font-family:var(--font-mono);font-size:11px;line-height:1.7;
+  color:rgba(199,125,255,.045);
+  padding:12px 16px;overflow:hidden;user-select:none;
+  white-space:pre;letter-spacing:.02em;
+}
+
+/* ── DOT GRID ── */
+.dot-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle, rgba(199,125,255,.12) 1px, transparent 1px);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 40%,black 100%);
+}
+
+/* ── AMBIENT ── */
+.amb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(100px);}
+.a1{width:800px;height:800px;top:-300px;right:-200px;background:radial-gradient(circle,rgba(123,47,247,.25) 0%,transparent 65%);}
+.a2{width:600px;height:600px;bottom:-200px;left:-150px;background:radial-gradient(circle,rgba(67,97,238,.18) 0%,transparent 65%);}
+.a3{width:400px;height:400px;top:40%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(204,68,255,.08) 0%,transparent 70%);}
+
+/* ── GLITCH SCAN LINES ── */
+.scanlines{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:64px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:34px;height:34px;border-radius:8px;}
+.nav-name{font-family:var(--font-body);font-weight:700;font-size:15px;color:var(--white);letter-spacing:.02em;text-transform:uppercase;}
+
+.nav-links{display:flex;gap:32px;list-style:none;position:absolute;left:50%;transform:translateX(-50%);}
+.nav-links a{font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;transition:color .18s;}
+.nav-links a:hover{color:var(--violet-hi);}
+
+.nav-ctas{display:flex;gap:10px;align-items:center;}
+.btn-nav-ghost{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--violet-hi);border:1px solid var(--violet-b);padding:8px 18px;transition:all .18s;}
+.btn-nav-ghost:hover{background:var(--violet-lo);}
+.btn-nav-solid{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--magenta);border:none;padding:9px 20px;transition:all .18s;font-weight:700;}
+.btn-nav-solid:hover{background:var(--magenta-hi);box-shadow:0 0 20px rgba(204,68,255,.4);}
+
+/* ── SHARED ── */
+.container{max-width:1180px;margin:0 auto;padding:0 52px;}
+.sec{padding:110px 0;position:relative;z-index:2;}
+.sec-sm{padding:80px 0;position:relative;z-index:2;}
+
+.label-tag{
+  font-family:var(--font-mono);font-size:11px;color:var(--violet);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.label-tag::before{content:'▶';font-size:7px;color:var(--magenta);}
+
+/* ── SOLID BLOCK LABELS (from poster) ── */
+.block-label{
+  display:inline-block;
+  background:var(--magenta);
+  color:var(--white);
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:5px 14px;
+  line-height:1.4;
+}
+.block-label.violet{background:var(--violet);color:var(--bg);}
+.block-label.blue{background:var(--blue-acc);color:var(--white);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:110px 52px 80px;
+  position:relative;z-index:2;
+}
+
+.hero-date-row{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:32px;justify-content:center;
+}
+.hero-date-chip{
+  display:inline-block;
+  background:#f5c518;
+  color:#0d0a1e;
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  padding:7px 16px;
+  border-radius:0;
+}
+.hero-live-dot{width:8px;height:8px;border-radius:50%;background:var(--magenta-hi);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+h1.hero-h{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(64px,10vw,140px);
+  line-height:.92;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+  color:var(--white);
+  margin-bottom:28px;
+}
+h1.hero-h .line2{
+  color:var(--magenta);
+  display:block;
+  text-shadow:0 0 60px rgba(204,68,255,.5);
+}
+h1.hero-h .line3{
+  color:transparent;
+  -webkit-text-stroke:2px var(--violet-hi);
+  display:block;
+  filter:drop-shadow(0 0 20px rgba(199,125,255,.3));
+}
+
+.hero-sub{
+  font-size:16px;color:var(--dim);line-height:1.75;
+  max-width:540px;margin-bottom:44px;font-weight:400;
+}
+.hero-sub strong{color:var(--text);font-weight:600;}
+
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  font-family:var(--font-mono);font-size:11px;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--white);background:var(--magenta);
+  border:none;padding:15px 32px;
+  transition:all .18s;
+}
+.btn-primary:hover{background:var(--magenta-hi);box-shadow:0 0 32px rgba(204,68,255,.45);transform:translateY(-2px);}
+.btn-ghost{
+  font-family:var(--font-mono);font-size:11px;font-weight:400;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--violet-hi);background:transparent;
+  border:1px solid var(--violet-b);padding:15px 32px;
+  transition:all .18s;
+}
+.btn-ghost:hover{border-color:var(--violet-hi);background:var(--violet-lo);}
+
+/* Hero stats */
+.hero-stats{
+  display:flex;gap:0;margin-top:72px;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;justify-content:center;
+}
+.hs{
+  text-align:center;padding:32px 48px;
+  border-right:1px solid var(--border);
+}
+.hs:last-child{border-right:none;}
+.hs-n{
+  font-family:var(--font-display);font-weight:900;font-size:52px;
+  color:var(--white);line-height:1;margin-bottom:6px;text-transform:uppercase;
+  letter-spacing:-.02em;
+}
+.hs-n em{color:var(--magenta);font-style:normal;}
+.hs-l{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;}
+
+/* Particle canvas */
+.hero-canvas-wrap{
+  width:100%;max-width:860px;height:240px;
+  margin-top:72px;position:relative;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.hero-canvas-wrap canvas{display:block;width:100%;height:100%;}
+.hcw-label{
+  position:absolute;top:14px;right:18px;
+  font-family:var(--font-mono);font-size:11px;
+  color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
+}
+/* Corner brackets */
+.corner{position:absolute;width:14px;height:14px;border-color:var(--violet);border-style:solid;}
+.corner.tl{top:0;left:0;border-width:2px 0 0 2px;}
+.corner.tr{top:0;right:0;border-width:2px 2px 0 0;}
+.corner.bl{bottom:0;left:0;border-width:0 0 2px 2px;}
+.corner.br{bottom:0;right:0;border-width:0 2px 2px 0;}
+
+/* ── MISSION ── */
+#mission{background:transparent;}
+.mission-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:48px;}
+.pillar{
+  background:var(--surface);border:1px solid var(--border);
+  padding:26px 22px;transition:border-color .2s,background .2s;
+  position:relative;overflow:hidden;
+}
+.pillar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.pillar:hover{border-color:var(--violet-b);background:var(--s2);}
+.pillar:hover::after{transform:scaleX(1);}
+.pi-icon{font-size:22px;margin-bottom:12px;}
+.pi-title{font-family:var(--font-display);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:7px;}
+.pi-desc{font-size:13px;color:var(--dim);line-height:1.65;font-weight:400;}
+
+.mission-right p{font-size:15px;color:var(--dim);line-height:1.8;margin-bottom:18px;}
+.mission-right p strong{color:var(--text);font-weight:600;}
+.mission-blockquote{
+  border-left:3px solid var(--magenta);
+  padding:16px 20px;background:rgba(204,68,255,.07);
+  font-family:var(--font-display);font-size:22px;font-weight:700;
+  line-height:1.4;color:var(--text);margin:28px 0;
+  text-transform:uppercase;letter-spacing:.02em;
+}
+.sec-title{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(44px,5.5vw,76px);
+  line-height:.95;letter-spacing:-.01em;text-transform:uppercase;
+  color:var(--white);margin-bottom:18px;
+}
+.sec-title .accent{color:var(--magenta);}
+.sec-title .outline{color:transparent;-webkit-text-stroke:1.5px var(--violet-hi);}
+.sec-sub{font-size:15px;color:var(--dim);line-height:1.75;max-width:400px;}
+
+/* ── STATS ── */
+#stats{background:var(--bg2);}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;}
+.stat-b{
+  background:var(--surface);border:1px solid var(--border);
+  padding:44px 20px;text-align:center;
+  transition:border-color .2s,background .2s;
+  position:relative;overflow:hidden;
+}
+.stat-b::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.stat-b:hover{border-color:var(--violet-b);background:var(--s2);}
+.stat-b:hover::before{transform:scaleX(1);}
+.sn{font-family:var(--font-display);font-weight:900;font-size:56px;color:var(--white);line-height:1;margin-bottom:8px;text-transform:uppercase;}
+.sn .acc{color:var(--magenta);}
+.sl{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;}
+.sc{font-size:11px;color:var(--muted);margin-top:5px;}
+
+/* ── EVENTS ── */
+#events{background:transparent;}
+.events-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:20px;flex-wrap:wrap;}
+
+.events-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;}
+.ev{
+  background:var(--surface);border:1px solid var(--border);
+  overflow:hidden;
+  transition:border-color .2s,transform .2s;
+}
+.ev:hover{border-color:var(--violet-b);transform:translateY(-4px);box-shadow:0 20px 60px rgba(123,47,247,.15);}
+
+.ev-img{height:150px;background:var(--bg3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ev-img-glow{position:absolute;inset:0;background:radial-gradient(circle at 30% 60%,rgba(123,47,247,.35),transparent 65%);}
+.ev-img-txt{position:relative;z-index:1;font-family:var(--font-display);font-weight:900;font-size:60px;color:rgba(255,255,255,.05);text-transform:uppercase;letter-spacing:-.04em;}
+.ev-badge{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;}
+.ev-badge.up{background:var(--violet);color:var(--bg);}
+.ev-badge.past{background:rgba(255,255,255,.08);border:1px solid var(--border2);color:var(--muted);}
+.ev-badge.live{background:#9900cc;color:var(--white);}
+
+.ev-body{padding:22px;}
+.ev-date{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.ev-date span{color:var(--violet-hi);}
+.ev-name{font-family:var(--font-display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:9px;line-height:1.1;}
+.ev-desc{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:16px;}
+.ev-tags{display:flex;gap:10px;flex-wrap:wrap;}
+.ev-tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:4px;}
+
+.ev.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;}
+.ev.featured .ev-img{height:100%;min-height:200px;}
+
+/* ── MEMBERS ── */
+#members-sec{background:var(--bg2);}
+.members-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:20px;flex-wrap:wrap;}
+
+.spotlight{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}
+.mc{
+  background:var(--surface);border:1px solid var(--border);
+  padding:26px 22px;
+  transition:border-color .2s,background .2s,transform .2s;
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+}
+.mc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.mc:hover{border-color:var(--violet-b);background:var(--s2);transform:translateY(-3px);}
+.mc:hover::after{transform:scaleX(1);}
+
+.mc-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;font-size:20px;color:var(--white);margin-bottom:14px;position:relative;flex-shrink:0;}
+.mc-on{position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:#4ade80;border:2px solid var(--surface);animation:onp 2.5s infinite;}
+.mc-off{position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:var(--muted);border:2px solid var(--surface);}
+@keyframes onp{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}60%{box-shadow:0 0 0 4px rgba(74,222,128,0)}}
+
+.mc-name{font-family:var(--font-display);font-weight:800;font-size:17px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:2px;}
+.mc-role{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
+.mc-co{font-size:12px;color:var(--dim);margin-bottom:12px;}
+.mc-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;}
+.mct{font-family:var(--font-mono);font-size:8px;letter-spacing:.07em;text-transform:uppercase;padding:3px 7px;background:var(--violet-lo);border:1px solid var(--violet-b);color:var(--violet-hi);}
+.mct.mg{background:rgba(204,68,255,.08);border-color:rgba(204,68,255,.25);color:var(--magenta);}
+.mct.wh{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:var(--dim);}
+.mc-ach{margin-top:auto;padding-top:12px;border-top:1px solid var(--border);}
+.mc-a{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.mc-a span{color:var(--violet-hi);font-weight:600;}
+.mc-badge{display:inline-block;font-family:var(--font-display);font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;background:var(--magenta);color:var(--white);margin-top:10px;}
+.mc-x{position:absolute;top:14px;right:14px;font-size:13px;color:var(--muted);transition:color .18s;}
+.mc:hover .mc-x{color:var(--violet-hi);}
+
+/* ── PARTNERS ── */
+#partners{background:transparent;}
+.partners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:52px;}
+.pt{
+  background:var(--surface);border:1px solid var(--border);
+  padding:32px 18px;display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.pt:hover{border-color:var(--violet-b);background:var(--s2);}
+.pt-name{font-family:var(--font-display);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);transition:color .2s;text-align:center;}
+.pt:hover .pt-name{color:var(--violet-hi);}
+
+/* ── WALL OF LOVE ── */
+#wall{background:var(--bg2);overflow:hidden;}
+.wall-outer{overflow:hidden;margin-top:48px;position:relative;}
+.wall-outer::before,.wall-outer::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:3;pointer-events:none;}
+.wall-outer::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent);}
+.wall-outer::after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent);}
+.wall-track{display:flex;gap:10px;white-space:nowrap;animation:wallScroll 42s linear infinite;}
+.wall-track-r{animation-direction:reverse;margin-top:10px;}
+@keyframes wallScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.wall-outer:hover .wall-track,.wall-outer:focus-within .wall-track{animation-play-state:paused;}
+.tw{
+  display:inline-block;white-space:normal;vertical-align:top;
+  width:290px;background:var(--surface);border:1px solid var(--border);
+  padding:20px;flex-shrink:0;transition:border-color .2s;
+}
+.tw:hover{border-color:var(--violet-b);}
+.tw-auth{display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+.tw-av{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:13px;color:var(--white);}
+.tw-name{font-family:var(--font-display);font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white);letter-spacing:.04em;}
+.tw-handle{font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+.tw-x{margin-left:auto;font-size:12px;color:var(--muted);}
+.tw-text{font-size:13px;color:var(--dim);line-height:1.6;}
+.tw-text strong{color:var(--violet-hi);font-weight:600;}
+
+/* ── FAQ ── */
+#faq{background:transparent;}
+.faq-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start;}
+.faq-list{margin-top:52px;}
+.fq{border-bottom:1px solid var(--border);}
+.fq:first-child{border-top:1px solid var(--border);}
+.fq-q{padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--font-display);font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.04em;color:var(--text);transition:color .18s;}
+.fq:hover .fq-q{color:var(--violet-hi);}
+.fq-icon{width:24px;height:24px;border:1px solid var(--violet-b);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--violet);transition:transform .3s,background .2s;font-size:14px;}
+.fq.open .fq-icon{transform:rotate(45deg);background:var(--violet-lo);}
+.fq-a{font-size:14px;color:var(--dim);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;}
+.fq.open .fq-a{max-height:260px;padding-bottom:20px;}
+
+/* ── JOIN CTA ── */
+#join{background:var(--bg2);position:relative;overflow:hidden;text-align:center;}
+.join-glow{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.join-orb{position:absolute;width:700px;height:700px;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(123,47,247,.25) 0%,rgba(204,68,255,.1) 50%,transparent 70%);filter:blur(60px);}
+.join-inner{padding:120px 52px;position:relative;z-index:3;}
+.join-title{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(60px,9vw,120px);
+  line-height:.9;letter-spacing:-.02em;text-transform:uppercase;
+  color:var(--white);margin-bottom:28px;
+}
+.join-title .mg{color:var(--magenta);display:block;text-shadow:0 0 60px rgba(204,68,255,.5);}
+.join-sub{font-size:16px;color:var(--dim);max-width:500px;margin:0 auto 48px;line-height:1.75;}
+.social-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px;}
+.soc{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border:1px solid var(--border);padding:11px 20px;transition:all .18s;display:flex;align-items:center;gap:7px;}
+.soc:hover{border-color:var(--violet-b);color:var(--violet-hi);background:var(--violet-lo);}
+
+/* ── FOOTER ── */
+footer{background:var(--bg3);border-top:1px solid var(--border);position:relative;z-index:2;}
+.footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 52px 48px;}
+.f-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.f-logo img{width:34px;height:34px;border-radius:8px;}
+.f-logo-name{font-family:var(--font-display);font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.06em;color:var(--white);}
+.f-desc{font-size:13px;color:var(--muted);line-height:1.75;max-width:280px;margin-bottom:18px;}
+.f-global{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.f-global a{color:var(--violet-hi);transition:color .18s;}
+.f-global a:hover{color:var(--magenta);}
+.fch{font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;}
+.fcl{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.fcl a{font-size:13px;color:var(--muted);transition:color .18s;}
+.fcl a:hover{color:var(--violet-hi);}
+.footer-bot{padding:18px 52px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fb-t{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;}
+.fb-t span{color:var(--violet-hi);}
+
+/* ── FADE IN ── */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .65s,transform .65s;}
+.fi.vis{opacity:1;transform:translateY(0);}
+
+
+/* ── FOCUS STYLES (keyboard accessibility) ── */
+:focus-visible{
+  outline:2px solid var(--violet-hi);
+  outline-offset:3px;
+}
+a:focus-visible,button:focus-visible{
+  outline:2px solid var(--magenta);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+/* ── SKIP LINK (accessibility) ── */
+.skip-link{
+  position:absolute;top:-100px;left:16px;
+  background:var(--violet);color:var(--bg);padding:10px 18px;
+  font-family:var(--font-mono);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;z-index:9999;
+  transition:top .2s;
+}
+.skip-link:focus{top:16px;outline:3px solid var(--magenta);outline-offset:2px;}
+
+
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  .fi{opacity:1;transform:none;transition:none;}
+  .fi.vis{opacity:1;transform:none;}
+  .wall-track,.wall-track-r{animation:none;}
+  .pillar::after,.mc::after,.stat-b::before{transition:none;}
+  .mc,.pillar,.stat-b,.ev,.pt{transition:none;}
+  canvas{display:none;}
+  .hero-live-dot{animation:none;}
+  .mc-on{animation:none;}
+}
+
+/* ── THIN DIVIDER ── */
+.div-line{height:1px;background:linear-gradient(90deg,transparent,rgba(199,125,255,.25),transparent);position:relative;z-index:2;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}.nav-links{display:none;}
+  #hero{padding:100px 20px 60px;}
+  .mission-layout,.faq-layout{grid-template-columns:1fr;}
+  .pillars,.stats-row{grid-template-columns:1fr 1fr;}
+  .events-grid{grid-template-columns:1fr;}
+  .ev.featured{grid-column:span 1;grid-template-columns:1fr;}
+  .spotlight{grid-template-columns:repeat(2,1fr);}
+  .partners-grid{grid-template-columns:repeat(3,1fr);}
+  .footer-main{grid-template-columns:1fr 1fr;padding:40px 20px;}
+  .footer-bot{padding:14px 20px;}
+  .container{padding:0 20px;}
+  .join-inner{padding:80px 20px;}
+  .hs{padding:24px 28px;}
+}
+</style>
+</head>
+<body>
+
+<a href="#hero" class="skip-link">Skip to main content</a>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- Code texture bg -->
+<div class="code-bg" id="codeBg" role="presentation" aria-hidden="true"></div>
+<!-- Dot grid -->
+<div class="dot-grid" aria-hidden="true"></div>
+<!-- Scanlines -->
+<div class="scanlines" aria-hidden="true"></div>
+<!-- Ambient glows -->
+<div class="amb a1" aria-hidden="true"></div>
+<div class="amb a2" aria-hidden="true"></div>
+<div class="amb a3" aria-hidden="true"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">
+    <img src="./logo.png" alt="Superteam MY">
+    <span class="nav-name">Superteam MY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#members-sec">Members</a></li>
+    <li><a href="#partners">Ecosystem</a></li>
+    <li><a href="members.html">Directory</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="#" class="btn-nav-ghost">Bounties</a>
+    <a href="#join" class="btn-nav-solid">Join Community</a>
+  </div>
+</nav>
+
+<!-- ═══ ① HERO ═══ -->
+<main id="hero">
+  <div class="hero-date-row fi">
+    <span class="hero-date-chip">Solana · Malaysia</span>
+    <span class="hero-live-dot"></span>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;">Live Chapter</span>
+  </div>
+
+  <h1 class="hero-h fi" style="transition-delay:.08s">
+    Malaysia's<br>
+    <span class="line2">Solana</span>
+    <span class="line3">Builders.</span>
+  </h1>
+
+  <p class="hero-sub fi" style="transition-delay:.16s">
+    Superteam Malaysia is the digital home for the country's best <strong>developers, designers, and founders</strong> building the future on Solana. Learn, earn, and ship.
+  </p>
+
+  <div class="hero-btns fi" style="transition-delay:.24s">
+    <a href="#join" class="btn-primary"><span aria-hidden="true">▶ </span>Join Community</a>
+    <a href="#events" class="btn-ghost">Explore Opportunities</a>
+  </div>
+
+  <div class="hero-stats fi" style="transition-delay:.36s">
+    <div class="hs"><div class="hs-n"><span data-target="312">0</span></div><div class="hs-l">Members</div></div>
+    <div class="hs"><div class="hs-n"><span data-target="64">0</span></div><div class="hs-l">Projects Shipped</div></div>
+    <div class="hs"><div class="hs-n">RM<em><span data-target="2.1" data-suffix="M">0</span></em></div><div class="hs-l">Distributed</div></div>
+    <div class="hs"><div class="hs-n"><span data-target="28">0</span></div><div class="hs-l">Events Hosted</div></div>
+  </div>
+
+  <div class="hero-canvas-wrap fi" role="img" aria-label="Animated Solana network activity visualization" style="transition-delay:.48s">
+    <canvas id="pCanvas"></canvas>
+    <div class="hcw-label">Solana Network · Live</div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+  </div>
+</main>
+
+<div class="div-line"></div>
+
+<!-- ═══ ② MISSION ═══ -->
+<section id="mission" aria-label="Our mission" class="sec">
+  <div class="container">
+    <div class="mission-layout">
+      <div>
+        <div class="label-tag fi">Mission</div>
+        <h2 class="sec-title fi" style="transition-delay:.08s">What<br>We <span class="accent">Do</span></h2>
+        <p class="sec-sub fi" style="transition-delay:.16s">Empowering Malaysia's most ambitious Web3 builders — connecting talent with real opportunities across Solana.</p>
+        <div class="pillars">
+          <div class="pillar fi"><div class="pi-icon">🛠️</div><div class="pi-title">Builder Support</div><div class="pi-desc">Mentorship, resources, and guidance at every stage.</div></div>
+          <div class="pillar fi" style="transition-delay:.06s"><div class="pi-icon">🏆</div><div class="pi-title">Events & Hackathons</div><div class="pi-desc">IRL meetups from KL to Penang.</div></div>
+          <div class="pillar fi" style="transition-delay:.12s"><div class="pi-icon">💰</div><div class="pi-title">Grants & Funding</div><div class="pi-desc">Solana Foundation grants and investor connections.</div></div>
+          <div class="pillar fi" style="transition-delay:.18s"><div class="pi-icon">🎯</div><div class="pi-title">Jobs & Bounties</div><div class="pi-desc">Real paid opportunities to build on Solana.</div></div>
+          <div class="pillar fi" style="transition-delay:.24s"><div class="pi-icon">📚</div><div class="pi-title">Education</div><div class="pi-desc">Workshops and resources for Malaysian builders.</div></div>
+          <div class="pillar fi" style="transition-delay:.30s"><div class="pi-icon">🌐</div><div class="pi-title">Ecosystem</div><div class="pi-desc">Plug into the global Superteam network.</div></div>
+        </div>
+      </div>
+      <div class="mission-right fi" style="transition-delay:.2s">
+        <div class="label-tag" style="margin-bottom:24px;">Our Story</div>
+        <p>Superteam Malaysia is the local chapter of the <strong>global Superteam network</strong> — the most elite community of talent in the Solana ecosystem. We launched because Malaysia has extraordinary builders who deserve a real home.</p>
+        <div class="mission-blockquote">"We build the infrastructure for Malaysia's Web3 generation."</div>
+        <p>From the shadow of the <strong>Petronas Towers</strong> to the hawker stalls of Penang, our builders are shipping products felt across the globe. If you're building on Solana in Malaysia — you belong here.</p>
+        <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="members.html" class="btn-primary">Meet the Builders →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ③ STATS ═══ -->
+<section id="stats" aria-label="Impact statistics" class="sec-sm">
+  <div class="container">
+    <div class="label-tag fi" style="display:flex;justify-content:center;margin-bottom:44px;">Impact by the Numbers</div>
+    <div class="stats-row">
+      <div class="stat-b fi"><div class="sn"><span data-count="312">0</span></div><div class="sl">Active Members</div><div class="sc">Across 8 states</div></div>
+      <div class="stat-b fi" style="transition-delay:.06s"><div class="sn"><span data-count="28">0</span></div><div class="sl">Events Hosted</div><div class="sc">IRL + virtual</div></div>
+      <div class="stat-b fi" style="transition-delay:.12s"><div class="sn"><span data-count="64">0</span></div><div class="sl">Projects Built</div><div class="sc">On Solana</div></div>
+      <div class="stat-b fi" style="transition-delay:.18s"><div class="sn"><span data-count="190">0</span></div><div class="sl">Bounties Done</div><div class="sc">RM 190K+</div></div>
+      <div class="stat-b fi" style="transition-delay:.24s"><div class="sn"><span data-count="12">0</span><span class="acc">K</span></div><div class="sl">Community Reach</div><div class="sc">Across channels</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ④ EVENTS ═══ -->
+<section id="events" aria-label="Events" class="sec">
+  <div class="container">
+    <div class="events-head">
+      <div>
+        <div class="label-tag fi">Events</div>
+        <h2 class="sec-title fi" style="transition-delay:.08s">What's <span class="accent">On</span></h2>
+        <p class="sec-sub fi" style="transition-delay:.16s;max-width:300px;">Hackathons, AMAs, workshops and IRL meetups — powered by Luma.</p>
+      </div>
+      <a href="https://lu.ma/superteam-my" target="_blank" rel="noopener noreferrer" aria-label="View all events on Luma (opens in new tab)" class="btn-ghost fi" style="transition-delay:.1s;align-self:flex-end;">View All on Luma →</a>
+    </div>
+    <div class="events-grid">
+      <div class="ev featured fi">
+        <div class="ev-img">
+          <div class="ev-img-glow"></div>
+          <div class="ev-img-txt">Build</div>
+          <span class="ev-badge up">Upcoming</span>
+        </div>
+        <div class="ev-body" style="display:flex;flex-direction:column;justify-content:center;">
+          <div class="ev-date"><span>MAR 28, 2026</span> · Thursday · 7PM</div>
+          <div class="ev-name">KL Builder Night</div>
+          <div class="ev-desc">The flagship monthly meetup for Superteam MY. Network with Malaysia's top Solana developers, designers, and founders. Live demos, lightning talks, open networking.</div>
+          <div class="ev-tags" style="margin-bottom:24px;">
+            <div class="ev-tag">📍 Kuala Lumpur</div>
+            <div class="ev-tag">🎟️ ~80 Spots</div>
+            <div class="ev-tag">🆓 Free</div>
+          </div>
+          <a href="#" class="btn-primary" style="align-self:flex-start;"><span aria-hidden="true">▶ </span>Register on Luma</a>
+        </div>
+      </div>
+      <div class="ev fi" style="transition-delay:.1s">
+        <div class="ev-img"><div class="ev-img-glow"></div><div class="ev-img-txt">Hack</div><span class="ev-badge live">Live</span></div>
+        <div class="ev-body">
+          <div class="ev-date"><span>MAR 14–16</span> · 48 Hours</div>
+          <div class="ev-name">Solana Colosseum Hackathon</div>
+          <div class="ev-desc">Malaysia's team in the global Solana hackathon. $50K in prizes across tracks.</div>
+          <div class="ev-tags"><div class="ev-tag">🌐 Virtual</div><div class="ev-tag">💰 $50K prizes</div></div>
+        </div>
+      </div>
+      <div class="ev fi" style="transition-delay:.15s">
+        <div class="ev-img"><div class="ev-img-glow"></div><div class="ev-img-txt">Learn</div><span class="ev-badge up">Upcoming</span></div>
+        <div class="ev-body">
+          <div class="ev-date"><span>APR 4</span> · 3 Hours</div>
+          <div class="ev-name">Smart Contract Security Workshop</div>
+          <div class="ev-desc">Solana program security and audit techniques with industry experts.</div>
+          <div class="ev-tags"><div class="ev-tag">📡 Virtual</div><div class="ev-tag">🆓 Free for members</div></div>
+        </div>
+      </div>
+      <div class="ev fi" style="transition-delay:.2s">
+        <div class="ev-img"><div class="ev-img-glow" style="opacity:.3"></div><div class="ev-img-txt">IRL</div><span class="ev-badge past">Past</span></div>
+        <div class="ev-body">
+          <div class="ev-date"><span>FEB 10</span></div>
+          <div class="ev-name">Penang Builder Meetup</div>
+          <div class="ev-desc">42 builders, 6 demos, 1 unforgettable night. Watch recap on Twitter.</div>
+          <div class="ev-tags"><div class="ev-tag">📍 Penang</div><div class="ev-tag">👥 42 Attended</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ⑤ MEMBERS ═══ -->
+<section id="members-sec" aria-label="Member spotlight" class="sec">
+  <div class="container">
+    <div class="members-head">
+      <div>
+        <div class="label-tag fi">Community</div>
+        <h2 class="sec-title fi" style="transition-delay:.08s">Member <span class="accent">Spotlight</span></h2>
+        <p class="sec-sub fi" style="transition-delay:.16s;max-width:320px;">The builders, designers, and founders shaping Malaysia's Solana ecosystem.</p>
+      </div>
+      <a href="members.html" class="btn-ghost fi" style="transition-delay:.1s;align-self:flex-end;">View Full Directory →</a>
+    </div>
+    <div class="spotlight">
+      <div class="mc fi">
+        <div class="mc-x">𝕏</div>
+        <div class="mc-av" style="background:linear-gradient(135deg,#4361ee,#7b2ff7)">AH<div class="mc-on"></div></div>
+        <div class="mc-name">Amir Hassan</div>
+        <div class="mc-role">Full-Stack Developer</div>
+        <div class="mc-co">Freelance · KL</div>
+        <div class="mc-tags"><span class="mct">Rust</span><span class="mct">Anchor</span><span class="mct mg">DeFi</span></div>
+        <div class="mc-ach">
+          <div class="mc-a">🏆 <span>Colosseum Finalist</span> 2024</div>
+          <div class="mc-a">🚀 <span>3 Projects</span> on Solana</div>
+        </div>
+        <span class="mc-badge">Core Builder</span>
+      </div>
+      <div class="mc fi" style="transition-delay:.07s">
+        <div class="mc-x">𝕏</div>
+        <div class="mc-av" style="background:linear-gradient(135deg,#7b2ff7,#cc44ff)">NZ<div class="mc-on"></div></div>
+        <div class="mc-name">Nurul Zahra</div>
+        <div class="mc-role">Product Designer</div>
+        <div class="mc-co">Independent · Penang</div>
+        <div class="mc-tags"><span class="mct">Web3 UX</span><span class="mct mg">Figma</span><span class="mct">Motion</span></div>
+        <div class="mc-ach">
+          <div class="mc-a">🎨 <span>Design Lead</span> Superteam Earn</div>
+          <div class="mc-a">💎 <span>2 Grants</span> received</div>
+        </div>
+        <span class="mc-badge">Design Guild</span>
+      </div>
+      <div class="mc fi" style="transition-delay:.14s">
+        <div class="mc-x">𝕏</div>
+        <div class="mc-av" style="background:linear-gradient(135deg,#cc44ff,#4361ee)">RK<div class="mc-off"></div></div>
+        <div class="mc-name">Raj Kumar</div>
+        <div class="mc-role">Founder / CEO</div>
+        <div class="mc-co">SolMY Labs · JB</div>
+        <div class="mc-tags"><span class="mct mg">Founder</span><span class="mct">NFT</span><span class="mct wh">Growth</span></div>
+        <div class="mc-ach">
+          <div class="mc-a">🌟 <span>$150K</span> raised on-chain</div>
+          <div class="mc-a">📣 <span>DAO Contributor</span> 2023</div>
+        </div>
+        <span class="mc-badge">Ecosystem Leader</span>
+      </div>
+      <div class="mc fi" style="transition-delay:.21s">
+        <div class="mc-x">𝕏</div>
+        <div class="mc-av" style="background:linear-gradient(135deg,#4361ee,#cc44ff)">LW<div class="mc-on"></div></div>
+        <div class="mc-name">Li Wei Chen</div>
+        <div class="mc-role">Protocol Engineer</div>
+        <div class="mc-co">OpenSol · KL</div>
+        <div class="mc-tags"><span class="mct">Rust</span><span class="mct">Anchor</span><span class="mct mg">DeFi</span></div>
+        <div class="mc-ach">
+          <div class="mc-a">🔐 <span>2 Protocols</span> audited</div>
+          <div class="mc-a">🏆 <span>Hackathon Winner</span> ×2</div>
+        </div>
+        <span class="mc-badge">Hackathon Winner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ⑥ PARTNERS ═══ -->
+<section id="partners" aria-label="Partners and ecosystem" class="sec">
+  <div class="container">
+    <div class="label-tag fi">Ecosystem</div>
+    <h2 class="sec-title fi" style="transition-delay:.08s">Partners &amp; <span class="accent">Ecosystem</span></h2>
+    <p class="sec-sub fi" style="transition-delay:.16s;">Solana projects and Malaysian partners building alongside us.</p>
+    <div class="partners-grid">
+      <div class="pt fi"><div class="pt-name">Solana Foundation</div></div>
+      <div class="pt fi" style="transition-delay:.05s"><div class="pt-name">Jupiter</div></div>
+      <div class="pt fi" style="transition-delay:.1s"><div class="pt-name">Helius</div></div>
+      <div class="pt fi" style="transition-delay:.15s"><div class="pt-name">Magic Eden</div></div>
+      <div class="pt fi" style="transition-delay:.2s"><div class="pt-name">Marinade</div></div>
+      <div class="pt fi" style="transition-delay:.05s"><div class="pt-name">Drift Protocol</div></div>
+      <div class="pt fi" style="transition-delay:.1s"><div class="pt-name">Phantom</div></div>
+      <div class="pt fi" style="transition-delay:.15s"><div class="pt-name">Superteam</div></div>
+      <div class="pt fi" style="transition-delay:.2s"><div class="pt-name">Orca</div></div>
+      <div class="pt fi" style="transition-delay:.25s"><div class="pt-name">MNT Digital</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ⑦ WALL OF LOVE ═══ -->
+<section id="wall" aria-label="Community testimonials" class="sec">
+  <div class="container">
+    <div class="label-tag fi">Community</div>
+    <h2 class="sec-title fi" style="transition-delay:.08s">Wall of <span class="accent">Love</span></h2>
+    <p class="sec-sub fi" style="transition-delay:.16s;">What builders say about Superteam Malaysia.</p>
+  </div>
+  <div class="wall-outer" style="padding-bottom:96px;">
+    <div class="wall-track">
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#7b2ff7)">AM</div><div><div class="tw-name">Azri M.</div><div class="tw-handle">@azri_builds</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Just shipped my first Solana dApp because of <strong>@SuperteamMY</strong>. The mentors, the bounties, the community — genuinely world-class.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#7b2ff7,#cc44ff)">SL</div><div><div class="tw-name">Sarah Lim</div><div class="tw-handle">@slimdesigns</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Zero Web3 knowledge to shipping a full product in 3 months. <strong>Superteam Malaysia</strong> is not just a community — it's an accelerator.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#4361ee)">DK</div><div><div class="tw-name">Dev Kumar</div><div class="tw-handle">@devkumar_sol</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Won my first bounty through <strong>@SuperteamMY</strong> last week. RM 4,200 for a weekend of work. The ecosystem is real.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#cc44ff)">FZ</div><div><div class="tw-name">Farah Z.</div><div class="tw-handle">@farahz_web3</div></div><div class="tw-x">𝕏</div></div><div class="tw-text"><strong>KL Builder Night</strong> was the best tech event in Malaysia. Quality people, real projects, no BS. Come to the next one.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#7b2ff7)">AM</div><div><div class="tw-name">Azri M.</div><div class="tw-handle">@azri_builds</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Just shipped my first Solana dApp because of <strong>@SuperteamMY</strong>. The mentors, the bounties, the community — genuinely world-class.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#7b2ff7,#cc44ff)">SL</div><div><div class="tw-name">Sarah Lim</div><div class="tw-handle">@slimdesigns</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Zero Web3 knowledge to shipping a full product in 3 months. <strong>Superteam Malaysia</strong> is not just a community — it's an accelerator.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#4361ee)">DK</div><div><div class="tw-name">Dev Kumar</div><div class="tw-handle">@devkumar_sol</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Won my first bounty through <strong>@SuperteamMY</strong> last week. RM 4,200 for a weekend of work. The ecosystem is real.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#cc44ff)">FZ</div><div><div class="tw-name">Farah Z.</div><div class="tw-handle">@farahz_web3</div></div><div class="tw-x">𝕏</div></div><div class="tw-text"><strong>KL Builder Night</strong> was the best tech event in Malaysia. Quality people, real projects, no BS. Come to the next one.</div></div>
+    </div>
+    <div class="wall-track wall-track-r">
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#7b2ff7,#4361ee)">KO</div><div><div class="tw-name">Kai Onn</div><div class="tw-handle">@kaionn_dev</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Superteam MY connected me with my co-founder. We met at a builder night, shipped in 6 weeks, and just closed our seed round.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#7b2ff7)">MN</div><div><div class="tw-name">Maya Nair</div><div class="tw-handle">@mayanair_sol</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">The quality of builders in <strong>@SuperteamMY</strong> is insane. These people actually ship. Malaysia Web3 is going to be something special.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#7b2ff7)">TH</div><div><div class="tw-name">Tan Hui</div><div class="tw-handle">@tanhui_builds</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Got my first Solana grant through Superteam. $10K to build what I love. If you're a Malaysian dev sleeping on this — wake up.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#4361ee)">PV</div><div><div class="tw-name">Priya V.</div><div class="tw-handle">@priya_web3my</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Best decision I made in 2024 was applying to Superteam MY. The network, the opportunities, and the people are world-class.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#7b2ff7,#4361ee)">KO</div><div><div class="tw-name">Kai Onn</div><div class="tw-handle">@kaionn_dev</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Superteam MY connected me with my co-founder. We met at a builder night, shipped in 6 weeks, and just closed our seed round.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#7b2ff7)">MN</div><div><div class="tw-name">Maya Nair</div><div class="tw-handle">@mayanair_sol</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">The quality of builders in <strong>@SuperteamMY</strong> is insane. These people actually ship. Malaysia Web3 is going to be something special.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#4361ee,#7b2ff7)">TH</div><div><div class="tw-name">Tan Hui</div><div class="tw-handle">@tanhui_builds</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Got my first Solana grant through Superteam. $10K to build what I love. If you're a Malaysian dev sleeping on this — wake up.</div></div>
+      <div class="tw"><div class="tw-auth"><div class="tw-av" style="background:linear-gradient(135deg,#cc44ff,#4361ee)">PV</div><div><div class="tw-name">Priya V.</div><div class="tw-handle">@priya_web3my</div></div><div class="tw-x">𝕏</div></div><div class="tw-text">Best decision I made in 2024 was applying to Superteam MY. The network, the opportunities, and the people are world-class.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ⑧ FAQ ═══ -->
+<section id="faq" aria-label="Frequently asked questions" class="sec">
+  <div class="container">
+    <div class="faq-layout">
+      <div>
+        <div class="label-tag fi">FAQ</div>
+        <h2 class="sec-title fi" style="transition-delay:.08s">Got<br><span class="accent">Questions?</span></h2>
+        <p class="sec-sub fi" style="transition-delay:.16s;">Everything you need to know about Superteam Malaysia.</p>
+        <div class="fi" style="transition-delay:.24s;margin-top:36px;">
+          <a href="#join" class="btn-primary">Still curious? Join us →</a>
+        </div>
+      </div>
+      <div class="faq-list fi" style="transition-delay:.12s;">
+        <div class="fq"><div class="fq-q">What is Superteam Malaysia?<div class="fq-icon">+</div></div><div class="fq-a">Superteam Malaysia is the local chapter of the global Superteam network — the most elite community of talent in the Solana ecosystem. We connect Malaysian builders, creators, and founders with real opportunities to earn, learn, and ship on Solana.</div></div>
+        <div class="fq"><div class="fq-q">How do I join?<div class="fq-icon">+</div></div><div class="fq-a">Apply through our application form — reviewed on a rolling basis. We look for people passionate about Web3 who are actively building. Join our Telegram group to start connecting right away.</div></div>
+        <div class="fq"><div class="fq-q">What opportunities are available?<div class="fq-icon">+</div></div><div class="fq-a">We offer bounties, hackathons with cash prizes, grants for early-stage projects, job referrals, mentorship, and ecosystem connections. Opportunities range from a few hundred to tens of thousands of ringgit.</div></div>
+        <div class="fq"><div class="fq-q">How can projects collaborate with us?<div class="fq-icon">+</div></div><div class="fq-a">Solana projects and ecosystem partners can post bounties, sponsor events, or partner with us to access Malaysian talent. Reach out via Twitter/X or Telegram.</div></div>
+        <div class="fq"><div class="fq-q">Do I need to be a developer?<div class="fq-icon">+</div></div><div class="fq-a">Not at all. Superteam welcomes developers, designers, content creators, growth hackers, BD professionals, and community managers. If you're passionate about building Web3 in Malaysia, you belong here.</div></div>
+        <div class="fq"><div class="fq-q">Is it free to join?<div class="fq-icon">+</div></div><div class="fq-a">Membership is free. We're selective to maintain quality, but there are no fees. Once you're in, all resources, events, and community access are yours.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- ═══ ⑨ JOIN CTA ═══ -->
+<section id="join" aria-label="Join the community">
+  <div class="join-glow"><div class="join-orb"></div></div>
+  <div class="join-inner">
+    <div class="label-tag fi" style="justify-content:center;margin-bottom:22px;">Join the Movement</div>
+    <div class="join-title fi" style="transition-delay:.08s">
+      Ready<br>to <span class="mg">Build?</span>
+    </div>
+    <p class="join-sub fi" style="transition-delay:.16s;">Superteam Malaysia is where the country's best builders come to ship real products, earn real money, and connect with the global Solana ecosystem.</p>
+    <div class="fi" style="transition-delay:.24s;">
+      <a href="#" class="btn-primary" style="font-size:13px;padding:16px 40px;"><span aria-hidden="true">▶ </span>Apply to Join Superteam MY</a>
+    </div>
+    <div class="social-row fi" style="transition-delay:.32s;">
+      <a href="https://t.me/SuperteamMY" target="_blank" class="soc">✈️ Telegram</a>
+      <a href="https://discord.gg/superteam" target="_blank" class="soc">💬 Discord</a>
+      <a href="https://x.com/SuperteamMY" target="_blank" class="soc">𝕏 Twitter</a>
+      <a href="#" class="soc">📧 Newsletter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ⑩ FOOTER ═══ -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <div class="f-logo">
+        <img src="./logo.png" alt="Superteam MY">
+        <span class="f-logo-name">Superteam MY 🇲🇾</span>
+      </div>
+      <p class="f-desc">Malaysia's premier community of Solana builders, designers, and founders. Connecting talent with real opportunities on the world's fastest blockchain.</p>
+      <div class="f-global">Part of the global <a href="https://superteam.fun" target="_blank" rel="noopener noreferrer" aria-label="Superteam Global (opens in new tab)">Superteam</a> network →</div>
+    </div>
+    <div><div class="fch">Navigate</div><ul class="fcl"><li><a href="#mission">Mission</a></li><li><a href="#events">Events</a></li><li><a href="members.html">Members</a></li><li><a href="#partners">Ecosystem</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div><div class="fch">Opportunities</div><ul class="fcl"><li><a href="#">Open Bounties</a></li><li><a href="#">Hackathons</a></li><li><a href="#">Grants</a></li><li><a href="#">Jobs Board</a></li><li><a href="#">Workshops</a></li></ul></div>
+    <div><div class="fch">Connect</div><ul class="fcl"><li><a href="https://x.com/SuperteamMY" target="_blank">Twitter / X</a></li><li><a href="https://t.me/SuperteamMY" target="_blank">Telegram</a></li><li><a href="#">Discord</a></li><li><a href="#">GitHub</a></li><li><a href="https://superteam.fun" target="_blank">Superteam Global</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <div class="fb-t">© 2025 <span>Superteam Malaysia</span> · Built on <span>Solana</span></div>
+    <div class="fb-t">Block: <span id="bnum">273,847,291</span></div>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.pillar,.mc,.stat-b,.pt,.tw,.fq,.soc,.ev').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='30px';ring.style.height='30px';});
+});
+
+/* CODE BG */
+const codeLines=[
+  'hashMerkleRoot = 0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b',
+  'txNew.vin[0].scriptSig = 486604799 4',
+  '0x736B6E616220726F662074756F6C69616220646E6F6365732066',
+  'txNew.vout[0].nValue = 5000000000',
+  'txNew.vout[0].scriptPubKey = OP_DUP OP_HASH160 OP_CHECKSIG',
+  'block.nVersion = 1  block.nTime = 1231006505',
+  'CTxIn(COutPoint(000000,-1),04ffff001d0104)',
+  'CTxOut(nValue=50.00000000) vMerkleTree: 4a5e1e',
+  'GetHash()=000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f',
+  'let (pda, bump) = Pubkey::find_program_address(&[b"superteam",b"my"],&id());',
+  'invoke(&instruction, accounts)?; msg!("Superteam Malaysia initialized");',
+  'program_id: So1ana11111111111111111111111111111111111112',
+];
+const bg=document.getElementById('codeBg');
+let txt='';for(let i=0;i<60;i++)txt+=codeLines[i%codeLines.length]+'\n';
+bg.textContent=txt;
+
+/* FADE IN */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.07});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* COUNTERS */
+function animCount(el){
+  const raw=el.dataset.target||el.dataset.count||'0';
+  const isFloat=raw.includes('.');
+  const target=parseFloat(raw);
+  const suffix=el.dataset.suffix||'';
+  let st=null;
+  function step(ts){
+    if(!st)st=ts;
+    const p=Math.min((ts-st)/2000,1);
+    const e2=1-Math.pow(1-p,3);
+    const v=isFloat?(e2*target).toFixed(1):(Math.round(e2*target)).toLocaleString();
+    el.textContent=v+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const cio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animCount(e.target);cio.unobserve(e.target);}});
+},{threshold:.5});
+document.querySelectorAll('[data-target],[data-count]').forEach(el=>cio.observe(el));
+
+/* FAQ */
+document.querySelectorAll('.fq').forEach((item,idx)=>{
+  const q=item.querySelector('.fq-q');
+  const a=item.querySelector('.fq-a');
+  q.setAttribute('tabindex','0');
+  q.setAttribute('role','button');
+  q.setAttribute('aria-expanded','false');
+  q.setAttribute('aria-controls','fq-answer-'+idx);
+  if(a)a.id='fq-answer-'+idx;
+  function toggle(){
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.fq').forEach(i=>{
+      i.classList.remove('open');
+      const qq=i.querySelector('.fq-q');
+      if(qq)qq.setAttribute('aria-expanded','false');
+    });
+    if(!open){item.classList.add('open');q.setAttribute('aria-expanded','true');}
+  }
+  q.addEventListener('click',toggle);
+  q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+});
+
+/* BLOCK COUNTER */
+let blk=273847291;
+setInterval(()=>{blk+=Math.floor(Math.random()*3)+1;const el=document.getElementById('bnum');if(el)el.textContent=blk.toLocaleString();},420);
+
+/* PARTICLE CANVAS */
+const canvas=document.getElementById('pCanvas');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){const r=canvas.parentElement.getBoundingClientRect();W=canvas.width=r.width;H=canvas.height=r.height;}
+resize();window.addEventListener('resize',()=>{resize();init();});
+function init(){
+  particles=[];
+  const count=Math.floor(W*H/800);
+  for(let i=0;i<count;i++){
+    particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.3,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random(),type:Math.floor(Math.random()*3)});
+  }
+}
+init();
+const pColors=['rgba(199,125,255,','rgba(204,68,255,','rgba(67,97,238,'];
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const grd=ctx.createLinearGradient(0,H*.7,W,H*.1);
+  grd.addColorStop(0,'rgba(123,47,247,.08)');
+  grd.addColorStop(.5,'rgba(199,125,255,.04)');
+  grd.addColorStop(1,'rgba(67,97,238,.07)');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+    p.a+=.004;
+    const alpha=.2+Math.abs(Math.sin(p.a))*.7;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=pColors[p.type]+alpha+')';ctx.fill();
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<80){
+        ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.strokeStyle=`rgba(199,125,255,${(1-dist/80)*.2})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
